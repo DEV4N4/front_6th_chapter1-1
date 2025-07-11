@@ -112,7 +112,7 @@
         </div>
       </div>
   `},p=e=>{let{image:t,title:n,lprice:r,productId:i,brand:a}=e;return`
- <div id="product-card" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden product-card"
+ <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden product-card"
         data-product-id="${i}">
     <!-- 상품 이미지 -->
     <div class="aspect-square bg-gray-100 overflow-hidden cursor-pointer product-image">
@@ -133,7 +133,7 @@
         </p>
         </div>
         <!-- 장바구니 버튼 -->
-        <button id="add-to-cart-btn" class="w-full bg-blue-600 text-white text-sm py-2 px-3 rounded-md
+        <button class="w-full bg-blue-600 text-white text-sm py-2 px-3 rounded-md
                 hover:bg-blue-700 transition-colors add-to-cart-btn" data-product-id="${i}">
         장바구니 담기
         </button>
@@ -207,7 +207,7 @@
       <a href="/" data-link class="inline-block px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">홈으로</a>
     </div>
     </main>
-  `;function b(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(C.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=y,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const x={state:{mounted:!1,cartItems:[],isCartModalOpen:!1},getState:e=>(localStorage.getItem(e)&&(x.state[e]=JSON.parse(localStorage.getItem(e))),x.state[e]),setState:(e,t,{persist:n=!1}={})=>{x.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[x.state[e],t=>{x.state[e]=t}],setStates:e=>{for(let t in e)x.state[t]=e[t]},observers:[],subscribe:e=>{x.observers.push(e)},unsubscribe:e=>{x.observers=x.observers.filter(t=>t!==e)},notify:()=>{x.observers.forEach(e=>e.update())}};function S(){let e={routes:{},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,`${i}${e}`),x.setState(`mounted`,!1),window.scrollTo(0,0),b()}};return window.addEventListener(`popstate`,()=>{x.setState(`mounted`,!1),b()}),e}const C=new S;async function w(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function T(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function E(){let e=await fetch(`/api/categories`);return await e.json()}const D=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),O=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),k=(e,t)=>{let n=x.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);x.setState(`cartItems`,i,{persist:!0})}else x.setState(`cartItems`,[...x.getState(`cartItems`),{...e,quantity:t}],{persist:!0});b()},A=({message:e})=>{let t=document.querySelector(`#success-toast`),n=document.querySelector(`#toast-message`);n.textContent=e,t&&(t.classList.remove(`opacity-0`),t.classList.add(`opacity-100`),setTimeout(()=>{t.classList.remove(`opacity-100`),t.classList.add(`opacity-0`)},3e3))},j=({message:e})=>`
+  `;function b(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(C.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=y,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const x={state:{mounted:!1,cartItems:[],isCartModalOpen:!1},getState:e=>(localStorage.getItem(e)&&(x.state[e]=JSON.parse(localStorage.getItem(e))),x.state[e]),setState:(e,t,{persist:n=!1}={})=>{x.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[x.state[e],t=>{x.state[e]=t}],setStates:e=>{for(let t in e)x.state[t]=e[t]},observers:[],subscribe:e=>{x.observers.push(e)},unsubscribe:e=>{x.observers=x.observers.filter(t=>t!==e)},notify:()=>{x.observers.forEach(e=>e.update())}};function S(){let e={routes:{},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,`${i}${e}`),x.setState(`mounted`,!1),window.scrollTo(0,0),b()}};return window.addEventListener(`popstate`,()=>{x.setState(`mounted`,!1),b()}),e}const C=new S;async function w(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function T(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function E(){let e=await fetch(`/api/categories`);return await e.json()}const D=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),O=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),k=(e,t)=>{let n=x.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);x.setState(`cartItems`,i,{persist:!0})}else x.setState(`cartItems`,[...x.getState(`cartItems`),{...e,quantity:t}],{persist:!0});b()},A=({message:e,type:t=`success`})=>{let n=document.querySelector(`#success-toast`),r=document.querySelector(`#error-toast`),i=document.querySelector(`#info-toast`),a=document.querySelector(`#toast-message`);a.textContent=e,t===`success`?(n.classList.remove(`opacity-0`),n.classList.add(`opacity-100`),setTimeout(()=>{n.classList.remove(`opacity-100`),n.classList.add(`opacity-0`)},3e3)):t===`error`?(r.classList.remove(`opacity-0`),r.classList.add(`opacity-100`),setTimeout(()=>{r.classList.remove(`opacity-100`),r.classList.add(`opacity-0`)},3e3)):t===`info`&&(i.classList.remove(`opacity-0`),i.classList.add(`opacity-100`),setTimeout(()=>{i.classList.remove(`opacity-100`),i.classList.add(`opacity-0`)},3e3))},j=({message:e})=>`
 <div id="success-toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 opacity-0 transition-opacity duration-300">
   <div class="bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 max-w-sm">
     <div class="flex-shrink-0">
@@ -362,54 +362,71 @@
         `:`
         ${F()}
         `}
-`);function L(e,t){return e.tagName===t?e:L(e.parentElement,t)}function R(e){return Number(e.replace(`원`,``).replace(/,/g,``))}const z={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},B=()=>{let{productCountLimit:e,pagination:t}=z,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,i=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=x.useState(`mounted`);return s===!1&&(z.productLoading=!0,z.categoryLoading=!0,Promise.all([w({limit:n,sort:r,page:o,search:i}).then(e=>{z.productLoading=!1,z.products=e.products,z.pagination=e.pagination,z.filters=e.filters,z.isEnd=e.pagination.total<=z.products.length}),E().then(e=>{z.categoryLoading=!1,z.categories=e})]).then(()=>{c(!0),b()})),`
+`);function L(e,t){return e.tagName===t?e:L(e.parentElement,t)}function R(e){return Number(e.replace(`원`,``).replace(/,/g,``))}const z=({message:e})=>`
+<div id="info-toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 opacity-0 transition-opacity duration-300">
+  <div class="bg-blue-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 max-w-sm">
+    <div class="flex-shrink-0">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <p class="text-sm font-medium">${e}</p>
+    <button id="toast-close-btn" class="flex-shrink-0 ml-2 text-white hover:text-gray-200">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>  
+</div>
+`,B={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},V=()=>{let{productCountLimit:e,pagination:t}=B,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,i=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=x.useState(`mounted`);return s===!1&&(B.productLoading=!0,B.categoryLoading=!0,Promise.all([w({limit:n,sort:r,page:o,search:i}).then(e=>{B.productLoading=!1,B.products=e.products,B.pagination=e.pagination,B.filters=e.filters,B.isEnd=e.pagination.total<=B.products.length}),E().then(e=>{B.categoryLoading=!1,B.categories=e})]).then(()=>{c(!0),b()})),`
     <div class="min-h-screen bg-gray-50">
       ${a({title:`쇼핑몰`,cartItemCount:x.getState(`cartItems`).length})}
       <main class="max-w-md mx-auto px-4 py-4">
-      ${f({state:z})}
+      ${f({state:B})}
         <!-- 상품 목록 -->
         <div class="mb-6">
           <div>
           <!-- 상품 개수 정보 -->
-          ${z.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
-              총 <span class="font-medium text-gray-900">${z.pagination.total}개</span>의 상품
+          ${B.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
+              총 <span class="font-medium text-gray-900">${B.pagination.total}개</span>의 상품
             </div>`}
             <!-- 상품 그리드 -->
             ${v({children:`
-              ${(z.products??[]).length>0?`${z.products.map(e=>p(e)).join(``)}`:_.repeat(4)}
+              ${(B.products??[]).length>0?`${B.products.map(e=>p(e)).join(``)}`:_.repeat(4)}
               `})}
             <div id="product-list-end-indicator" style="height: 100px;">
-              ${z.isEnd?h:m}
+              ${B.isEnd?h:m}
             </div>
           </div>
         </div>
       </main>
       ${g}
 </div>
-${j({message:`장바구니에 추가되었습니다`})}
 ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)})}):``}
-  `};B.state=z,B.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`#add-to-cart-btn`),a=document.getElementById(`cart-icon-btn`),o=document.getElementById(`cart-modal-close-btn`),s=document.getElementById(`cart-modal-overlay`),c=document.querySelectorAll(`.quantity-decrease-btn`),l=document.querySelectorAll(`.quantity-increase-btn`),u=document.querySelectorAll(`.quantity-input`),d=document.getElementById(`cart-modal-total-price`),f=document.querySelectorAll(`.cart-item-price`),p=document.querySelectorAll(`.cart-item-lprice`);f.forEach(e=>{e.addEventListener(`change`,()=>{})}),c.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)>1){let e=Number(r.value)-1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))-a).toLocaleString(`ko-KR`)+`원`}})}),l.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)){let e=Number(r.value)+1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))+a).toLocaleString(`ko-KR`)+`원`}})}),a.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!0),b()}),o.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),s.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),window.addEventListener(`keydown`,e=>{e.key===`Escape`&&(x.setState(`isCartModalOpen`,!1),b())}),r.forEach(e=>{e.addEventListener(`click`,()=>{C.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=z.products.find(t=>t.productId===e.target.dataset.productId);k(t,1),A({message:`장바구니에 추가되었습니다`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),limit:e.target.value});C.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),sort:e.target.value});C.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=D({...O(t.search),search:e.target.value});C.push(`${t.pathname}?${n}`)});let m=document.getElementById(`product-list-end-indicator`),h=!1,g=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!h){h=!0,z.pagination.page++,g.unobserve(m);let e=z.pagination.limit,t=z.filters.sort,n=z.pagination.page,r=z.filters.search;w({limit:e,sort:t,page:n,search:r}).then(e=>{z.productLoading=!1,z.products=[...z.products,...e.products],z.pagination=e.pagination,z.filters=e.filters,z.isEnd=e.pagination.total<=z.products.length}).then(()=>{h=!1,b()})}})},{threshold:.7});g.observe(m)};const V=`
+${j({message:`장바구니에 추가되었습니다`})}
+${z({message:`장바구니에서 삭제되었습니다`})}
+`};V.state=B,V.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`.add-to-cart-btn`),a=document.getElementById(`cart-icon-btn`),o=document.getElementById(`cart-modal-close-btn`),s=document.getElementById(`cart-modal-overlay`),c=document.querySelectorAll(`.quantity-decrease-btn`),l=document.querySelectorAll(`.quantity-increase-btn`),u=document.querySelectorAll(`.quantity-input`),d=document.getElementById(`cart-modal-total-price`),f=document.querySelectorAll(`.cart-item-price`),p=document.querySelectorAll(`.cart-item-lprice`),m=document.querySelectorAll(`.cart-item-remove-btn`);m.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId;console.log(n);let r=x.getState(`cartItems`);r=r.filter(e=>e.productId!==n),x.setState(`cartItems`,r,{persist:!0}),b(),A({message:`장바구니에서 삭제되었습니다`,type:`info`})})}),c.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)>1){let e=Number(r.value)-1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))-a).toLocaleString(`ko-KR`)+`원`}})}),l.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)){let e=Number(r.value)+1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))+a).toLocaleString(`ko-KR`)+`원`}})}),a.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!0),b()}),o&&o.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),s&&s.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),window.addEventListener(`keydown`,e=>{e.key===`Escape`&&(x.setState(`isCartModalOpen`,!1),b())}),r.forEach(e=>{e.addEventListener(`click`,()=>{C.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=B.products.find(t=>t.productId===e.target.dataset.productId);k(t,1),A({message:`장바구니에 추가되었습니다`,type:`success`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),limit:e.target.value});C.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),sort:e.target.value});C.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=D({...O(t.search),search:e.target.value});C.push(`${t.pathname}?${n}`)});let h=document.getElementById(`product-list-end-indicator`),g=!1,_=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!g){g=!0,B.pagination.page++,_.unobserve(h);let e=B.pagination.limit,t=B.filters.sort,n=B.pagination.page,r=B.filters.search;w({limit:e,sort:t,page:n,search:r}).then(e=>{B.productLoading=!1,B.products=[...B.products,...e.products],B.pagination=e.pagination,B.filters=e.filters,B.isEnd=e.pagination.total<=B.products.length}).then(()=>{g=!1,b()})}})},{threshold:.7});_.observe(h)};const H=`
     <div class="py-20 bg-gray-50 flex items-center justify-center">
         <div class="text-center">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <p class="text-gray-600">상품 정보를 불러오는 중...</p>
         </div>
     </div>  
-`,H=`
+`,U=`
     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,U=`
+`,W=`
     <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,W=({rating:e})=>`
+`,G=({rating:e})=>`
     <div class="flex items-center">
-        ${H.repeat(e)}
-        ${U.repeat(5-e)}
+        ${U.repeat(e)}
+        ${W.repeat(5-e)}
     </div>
     <span class="ml-2 text-sm text-gray-600">${Number(e).toFixed(1)}</span>
-`,G=({min:e,max:t})=>`
+`,K=({min:e,max:t})=>`
     <div class="flex items-center">
         <button id="quantity-decrease" class="w-8 h-8 flex items-center justify-center border border-gray-300 
             rounded-l-md bg-gray-50 hover:bg-gray-100">
@@ -426,7 +443,7 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
             </svg>
         </button>
     </div>
-`,K=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
+`,q=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
     <div class="bg-white rounded-lg shadow-sm mb-6">
       <!-- 상품 이미지 -->
       <div class="p-4">
@@ -439,7 +456,7 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
           <h1 class="text-xl font-bold text-gray-900 mb-3">${t}</h1>
           <!-- 평점 및 리뷰 -->
           <div class="flex items-center mb-3">
-            ${W({rating:n})}
+            ${G({rating:n})}
             <span class="ml-2 text-sm text-gray-600">(${r}개 리뷰)</span>
           </div>
           <!-- 가격 -->
@@ -460,7 +477,7 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
       <div class="border-t border-gray-200 p-4">
         <div class="flex items-center justify-between mb-4">
           <span class="text-sm font-medium text-gray-900">수량</span>
-          ${G({min:1,max:a})}
+          ${K({min:1,max:a})}
         </div>
         <!-- 액션 버튼 -->
         <button id="add-to-cart-btn" data-product-id="85067212996" class="w-full bg-blue-600 text-white py-3 px-4 rounded-md 
@@ -469,7 +486,7 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
         </button>
       </div>
     </div>
-`,q=({category1:e,category2:t})=>`
+`,J=({category1:e,category2:t})=>`
     <nav class="mb-4">
       <div class="flex items-center space-x-2 text-sm text-gray-600">
         <a href="/" data-link="" class="hover:text-blue-600 transition-colors">홈</a>
@@ -487,7 +504,7 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
         </button>
       </div>
     </nav>
-`,J=({products:e})=>`
+`,Y=({products:e})=>`
     <div class="bg-white rounded-lg shadow-sm">
       <div class="p-4 border-b border-gray-200">
         <h2 class="text-lg font-bold text-gray-900">관련 상품</h2>
@@ -507,15 +524,15 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
         </div>
       </div>
     </div>
-`,Y={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},X=()=>{let[e,t]=x.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(Y.isDetailLoading=!0,T(r).then(async e=>{Y.product=e,Y.isDetailLoading=!1,t(!0),b()})),Y.isRelatedProductsLoading=!0,Y.product&&Y.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{w({category1:Y.product.category1,category2:Y.product.category2}).then(e=>{Y.relatedProducts=e.products.filter(e=>e.productId!==Y.product.productId),Y.isRelatedProductsLoading=!1,b()})}),`
+`,X={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},Z=()=>{let[e,t]=x.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(X.isDetailLoading=!0,T(r).then(async e=>{X.product=e,X.isDetailLoading=!1,t(!0),b()})),X.isRelatedProductsLoading=!0,X.product&&X.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{w({category1:X.product.category1,category2:X.product.category2}).then(e=>{X.relatedProducts=e.products.filter(e=>e.productId!==X.product.productId),X.isRelatedProductsLoading=!1,b()})}),`
     <div class="min-h-screen bg-gray-50">
       ${a({title:`상품 상세`,cartItemCount:x.getState(`cartItems`).length})}
     <main class="max-w-md mx-auto px-4 py-4">
-      ${Y.isDetailLoading?V:`
+      ${X.isDetailLoading?H:`
           <!-- 브레드크럼 -->
-          ${q({category1:Y.product.category1,category2:Y.product.category2})}
+          ${J({category1:X.product.category1,category2:X.product.category2})}
             <!-- 상품 상세 정보 -->
-            ${K({image:Y.product.image,name:Y.product.title,rating:Y.product.rating,reviewCount:Y.product.reviewCount,price:Y.product.lprice,stock:Y.product.stock,description:Y.product.description})}`}
+            ${q({image:X.product.image,name:X.product.title,rating:X.product.rating,reviewCount:X.product.reviewCount,price:X.product.lprice,stock:X.product.stock,description:X.product.description})}`}
       <!-- 상품 목록으로 이동 -->
       <div class="mb-6">
         <button class="block w-full text-center bg-gray-100 text-gray-700 py-3 px-4 rounded-md 
@@ -524,9 +541,9 @@ ${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)
         </button>
       </div>
       <!-- 관련 상품 -->
-      ${Y.isRelatedProductsLoading&&(Y.relatedProducts??[]).length<=0?``:J({products:Y.relatedProducts})}
+      ${X.isRelatedProductsLoading&&(X.relatedProducts??[]).length<=0?``:Y({products:X.relatedProducts})}
     </main>
     ${g}
   </div>
   ${j({message:`장바구니에 추가되었습니다`})}
-  `};X.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<Y.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);k(Y.product,e),A({message:`장바구니에 추가되었습니다`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;C.push(`/product/${t}`),Y.relatedProducts=[],x.setState(`mounted`,!1)})})};const Z=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${i}/mockServiceWorker.js`}}));function Q(){x.subscribe({update:()=>{b({state:x.state})}}),C.addRoute(`/`,{regex:RegExp(`^${i}/?$`),page:B}),C.addRoute(`/product/:id`,{regex:RegExp(`^${i}/product/\\d+$`),page:X}),x.notify()}Z().then(Q);
+  `};Z.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<X.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);k(X.product,e),A({message:`장바구니에 추가되었습니다`,type:`success`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;C.push(`/product/${t}`),X.relatedProducts=[],x.setState(`mounted`,!1)})})};const Q=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${i}/mockServiceWorker.js`}}));function $(){x.subscribe({update:()=>{b({state:x.state})}}),C.addRoute(`/`,{regex:RegExp(`^${i}/?$`),page:V}),C.addRoute(`/product/:id`,{regex:RegExp(`^${i}/product/\\d+$`),page:Z}),x.notify()}Q().then($);
