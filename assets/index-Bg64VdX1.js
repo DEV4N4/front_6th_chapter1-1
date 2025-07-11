@@ -207,7 +207,7 @@
       <a href="/" data-link class="inline-block px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">홈으로</a>
     </div>
     </main>
-  `;function b(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(C.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=y,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const x={state:{mounted:!1,cartItems:[]},getState:e=>(localStorage.getItem(e)&&(x.state[e]=JSON.parse(localStorage.getItem(e))),x.state[e]),setState:(e,t,{persist:n=!1}={})=>{x.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[x.state[e],t=>{x.state[e]=t}],setStates:e=>{for(let t in e)x.state[t]=e[t]},observers:[],subscribe:e=>{x.observers.push(e)},unsubscribe:e=>{x.observers=x.observers.filter(t=>t!==e)},notify:()=>{x.observers.forEach(e=>e.update())}};function S(){let e={routes:{},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,`${i}${e}`),x.setState(`mounted`,!1),window.scrollTo(0,0),b()}};return window.addEventListener(`popstate`,()=>{x.setState(`mounted`,!1),b()}),e}const C=new S;async function w(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function T(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function E(){let e=await fetch(`/api/categories`);return await e.json()}const D=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),O=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),k=(e,t)=>{let n=x.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);x.setState(`cartItems`,i,{persist:!0})}else x.setState(`cartItems`,[...x.getState(`cartItems`),{...e,quantity:t}],{persist:!0});b()},A=({message:e})=>{let t=document.querySelector(`#success-toast`),n=document.querySelector(`#toast-message`);n.textContent=e,t&&(t.classList.remove(`opacity-0`),t.classList.add(`opacity-100`),setTimeout(()=>{t.classList.remove(`opacity-100`),t.classList.add(`opacity-0`)},3e3))},j=({message:e})=>`
+  `;function b(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(C.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=y,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const x={state:{mounted:!1,cartItems:[],isCartModalOpen:!1},getState:e=>(localStorage.getItem(e)&&(x.state[e]=JSON.parse(localStorage.getItem(e))),x.state[e]),setState:(e,t,{persist:n=!1}={})=>{x.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[x.state[e],t=>{x.state[e]=t}],setStates:e=>{for(let t in e)x.state[t]=e[t]},observers:[],subscribe:e=>{x.observers.push(e)},unsubscribe:e=>{x.observers=x.observers.filter(t=>t!==e)},notify:()=>{x.observers.forEach(e=>e.update())}};function S(){let e={routes:{},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,`${i}${e}`),x.setState(`mounted`,!1),window.scrollTo(0,0),b()}};return window.addEventListener(`popstate`,()=>{x.setState(`mounted`,!1),b()}),e}const C=new S;async function w(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function T(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function E(){let e=await fetch(`/api/categories`);return await e.json()}const D=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),O=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),k=(e,t)=>{let n=x.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);x.setState(`cartItems`,i,{persist:!0})}else x.setState(`cartItems`,[...x.getState(`cartItems`),{...e,quantity:t}],{persist:!0});b()},A=({message:e})=>{let t=document.querySelector(`#success-toast`),n=document.querySelector(`#toast-message`);n.textContent=e,t&&(t.classList.remove(`opacity-0`),t.classList.add(`opacity-100`),setTimeout(()=>{t.classList.remove(`opacity-100`),t.classList.add(`opacity-0`)},3e3))},j=({message:e})=>`
 <div id="success-toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 opacity-0 transition-opacity duration-300">
   <div class="bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 max-w-sm">
     <div class="flex-shrink-0">
@@ -223,24 +223,163 @@
     </button>
   </div>  
 </div>
-`,M={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},N=()=>{let{productCountLimit:e,pagination:t}=M,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,i=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=x.useState(`mounted`);return s===!1&&(M.productLoading=!0,M.categoryLoading=!0,Promise.all([w({limit:n,sort:r,page:o,search:i}).then(e=>{M.productLoading=!1,M.products=e.products,M.pagination=e.pagination,M.filters=e.filters,M.isEnd=e.pagination.total<=M.products.length}),E().then(e=>{M.categoryLoading=!1,M.categories=e})]).then(()=>{c(!0),b()})),`
+`,M=({children:e=``,cartItemCount:t=0})=>`
+<div id="cart-modal" class="fixed inset-0 z-50 overflow-y-auto cart-modal">
+    <!-- 배경 오버레이 -->
+    <div id="cart-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity cart-modal-overlay"></div>
+    <!-- 모달 컨테이너 -->
+    <div class="flex min-h-full items-end justify-center p-0 sm:items-center sm:p-4">
+      <div class="relative bg-white rounded-t-lg sm:rounded-lg shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-hidden">
+        <!-- 헤더 -->
+        <div class="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+          <h2 class="text-lg font-bold text-gray-900 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L6 2H3m4 11v6a1 1 0 001 1h1a1 1 0 001-1v-6M13 13v6a1 1 0 001 1h1a1 1 0 001-1v-6"></path>
+            </svg>
+            장바구니
+            ${t&&t>0?`<span class="text-sm font-normal text-gray-600 ml-1">(${t})</span>`:``}
+          </h2>
+          <button id="cart-modal-close-btn" class="text-gray-400 hover:text-gray-600 p-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- 컨텐츠 -->
+        <div class="flex flex-col max-h-[calc(90vh-120px)]">
+          ${e}
+        </div>
+      </div>
+    </div>
+</div>
+`,N=({productId:e,quantity:t})=>`
+    <div class="flex items-center mt-2">
+        <button id="cart-quantity-decrease-btn" class="quantity-decrease-btn w-7 h-7 flex items-center justify-center 
+        border border-gray-300 rounded-l-md bg-gray-50 hover:bg-gray-100" data-product-id="${e}">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+        </button>
+        <input type="number" id="cart-quantity-input" value="${t}" min="1" class="quantity-input w-12 h-7 text-center text-sm border-t border-b 
+        border-gray-300 focus:ring-1 focus:ring-blue-500 focus:border-blue-500" disabled="" data-product-id="${e}">
+        <button id="cart-quantity-increase-btn" class="quantity-increase-btn w-7 h-7 flex items-center justify-center 
+        border border-gray-300 rounded-r-md bg-gray-50 hover:bg-gray-100" data-product-id="${e}">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+        </button>
+    </div>
+  `,P=e=>{let{image:t,lprice:n,productId:r,quantity:i,title:a,checked:o}=e;return`
+    <div class="flex items-center py-3 border-b border-gray-100 cart-item" data-product-id="${r}">
+        <!-- 선택 체크박스 -->
+        <label class="flex items-center mr-3">
+            <input type="checkbox" ${o?`checked`:``} class="cart-item-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded 
+        focus:ring-blue-500" data-product-id="${r}">
+        </label>
+        <!-- 상품 이미지 -->
+        <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden mr-3 flex-shrink-0">
+            <img src="${t}" alt="${a}" class="w-full h-full object-cover cursor-pointer cart-item-image" data-product-id="${r}">
+        </div>
+        <!-- 상품 정보 -->
+        <div class="flex-1 min-w-0">
+            <h4 class="text-sm font-medium text-gray-900 truncate cursor-pointer cart-item-title" data-product-id="${r}">
+            ${a}
+            </h4>
+            <p data-product-id="${r}" class="cart-item-lprice text-sm text-gray-600 mt-1">
+            ${Number(n).toLocaleString(`ko-KR`)}원
+            </p>
+            <!-- 수량 조절 -->
+            ${N({productId:r,quantity:i})}
+        </div>
+        <!-- 가격 및 삭제 -->
+        <div class="text-right ml-3">
+            <p data-product-id="${r}" class="cart-item-price text-sm font-medium text-gray-900">
+            ${Number(n*i).toLocaleString(`ko-KR`)}원
+            </p>
+            <button class="cart-item-remove-btn mt-1 text-xs text-red-600 hover:text-red-800" data-product-id="${r}">
+            삭제
+            </button>
+        </div>
+    </div>  
+`},F=()=>`
+  <!-- 빈 장바구니 -->
+    <div class="flex-1 flex items-center justify-center p-8">
+    <div class="text-center">
+        <div class="text-gray-400 mb-4">
+        <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L6 2H3m4 11v6a1 1 0 001 1h1a1 1 0 001-1v-6M13 13v6a1 1 0 001 1h1a1 1 0 001-1v-6"></path>
+        </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">장바구니가 비어있습니다</h3>
+        <p class="text-gray-600">원하는 상품을 담아보세요!</p>
+    </div>
+    </div>  
+`,I=({cartItems:e=[]})=>(console.log(e),`
+    ${e.length>0?`
+         <!-- 전체 선택 섹션 -->
+          <div class="p-4 border-b border-gray-200 bg-gray-50">
+            <label class="flex items-center text-sm text-gray-700">
+              <input type="checkbox" id="cart-modal-select-all-checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2">
+              전체선택 (2개)
+            </label>
+          </div>
+        <!-- 아이템 목록 -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="p-4 space-y-4">
+                ${e.map(e=>`${P(e)}`).join(``)}
+            </div>
+        </div>
+        <!-- 하단 액션 -->
+        <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4">
+          <!-- 선택된 아이템 정보 -->
+          <div class="flex justify-between items-center mb-3 text-sm">
+            <span class="text-gray-600">선택한 상품 (1개)</span>
+            <span class="font-medium">440원</span>
+          </div>
+          <!-- 총 금액 -->
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-lg font-bold text-gray-900">총 금액</span>
+            <span id="cart-modal-total-price" class="text-xl font-bold text-blue-600">${e.reduce((e,t)=>e+t.lprice*t.quantity,0).toLocaleString(`ko-KR`)}원</span>
+          </div>
+          <!-- 액션 버튼들 -->
+          <div class="space-y-2">
+            <button id="cart-modal-remove-selected-btn" class="w-full bg-red-600 text-white py-2 px-4 rounded-md 
+                       hover:bg-red-700 transition-colors text-sm">
+              선택한 상품 삭제 (1개)
+            </button>
+            <div class="flex gap-2">
+              <button id="cart-modal-clear-cart-btn" class="flex-1 bg-gray-600 text-white py-2 px-4 rounded-md 
+                       hover:bg-gray-700 transition-colors text-sm">
+                전체 비우기
+              </button>
+              <button id="cart-modal-checkout-btn" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md 
+                       hover:bg-blue-700 transition-colors text-sm">
+                구매하기
+              </button>
+            </div>
+          </div>
+        </div>
+        `:`
+        ${F()}
+        `}
+`);function L(e,t){return e.tagName===t?e:L(e.parentElement,t)}function R(e){return Number(e.replace(`원`,``).replace(/,/g,``))}const z={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},B=()=>{let{productCountLimit:e,pagination:t}=z,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,i=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=x.useState(`mounted`);return s===!1&&(z.productLoading=!0,z.categoryLoading=!0,Promise.all([w({limit:n,sort:r,page:o,search:i}).then(e=>{z.productLoading=!1,z.products=e.products,z.pagination=e.pagination,z.filters=e.filters,z.isEnd=e.pagination.total<=z.products.length}),E().then(e=>{z.categoryLoading=!1,z.categories=e})]).then(()=>{c(!0),b()})),`
     <div class="min-h-screen bg-gray-50">
       ${a({title:`쇼핑몰`,cartItemCount:x.getState(`cartItems`).length})}
       <main class="max-w-md mx-auto px-4 py-4">
-      ${f({state:M})}
+      ${f({state:z})}
         <!-- 상품 목록 -->
         <div class="mb-6">
           <div>
           <!-- 상품 개수 정보 -->
-          ${M.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
-              총 <span class="font-medium text-gray-900">${M.pagination.total}개</span>의 상품
+          ${z.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
+              총 <span class="font-medium text-gray-900">${z.pagination.total}개</span>의 상품
             </div>`}
             <!-- 상품 그리드 -->
             ${v({children:`
-              ${(M.products??[]).length>0?`${M.products.map(e=>p(e)).join(``)}`:_.repeat(4)}
+              ${(z.products??[]).length>0?`${z.products.map(e=>p(e)).join(``)}`:_.repeat(4)}
               `})}
             <div id="product-list-end-indicator" style="height: 100px;">
-              ${M.isEnd?h:m}
+              ${z.isEnd?h:m}
             </div>
           </div>
         </div>
@@ -248,28 +387,29 @@
       ${g}
 </div>
 ${j({message:`장바구니에 추가되었습니다`})}
-  `};N.state=M,N.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`#add-to-cart-btn`);r.forEach(e=>{e.addEventListener(`click`,()=>{C.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=M.products.find(t=>t.productId===e.target.dataset.productId);k(t,1),A({message:`장바구니에 추가되었습니다`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),limit:e.target.value});C.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),sort:e.target.value});C.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=D({...O(t.search),search:e.target.value});C.push(`${t.pathname}?${n}`)});let a=document.getElementById(`product-list-end-indicator`),o=!1,s=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!o){o=!0,M.pagination.page++,s.unobserve(a);let e=M.pagination.limit,t=M.filters.sort,n=M.pagination.page,r=M.filters.search;w({limit:e,sort:t,page:n,search:r}).then(e=>{M.productLoading=!1,M.products=[...M.products,...e.products],M.pagination=e.pagination,M.filters=e.filters,M.isEnd=e.pagination.total<=M.products.length}).then(()=>{o=!1,b()})}})},{threshold:.7});s.observe(a)};const P=`
+${x.getState(`isCartModalOpen`)?M({children:I({cartItems:x.getState(`cartItems`)})}):``}
+  `};B.state=z,B.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`#add-to-cart-btn`),a=document.getElementById(`cart-icon-btn`),o=document.getElementById(`cart-modal-close-btn`),s=document.getElementById(`cart-modal-overlay`),c=document.querySelectorAll(`.quantity-decrease-btn`),l=document.querySelectorAll(`.quantity-increase-btn`),u=document.querySelectorAll(`.quantity-input`),d=document.getElementById(`cart-modal-total-price`),f=document.querySelectorAll(`.cart-item-price`),p=document.querySelectorAll(`.cart-item-lprice`);f.forEach(e=>{e.addEventListener(`change`,()=>{})}),c.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)>1){let e=Number(r.value)-1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))-a).toLocaleString(`ko-KR`)+`원`}})}),l.forEach(e=>{e.addEventListener(`click`,e=>{let t=L(e.target,`BUTTON`),n=t.dataset.productId,r=Array.from(u).find(e=>e.dataset.productId===n);if(Number(r.value)){let e=Number(r.value)+1;r.value=e;let t=x.getState(`cartItems`);t=t.map(t=>t.productId===n?{...t,quantity:e}:t),x.setState(`cartItems`,t,{persist:!0});let i=Array.from(f).find(e=>e.dataset.productId===n),a=R(Array.from(p).find(e=>e.dataset.productId===n).textContent),o=a*e;i.innerHTML=o.toLocaleString(`ko-KR`)+`원`,d.textContent=(Number(R(d.textContent))+a).toLocaleString(`ko-KR`)+`원`}})}),a.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!0),b()}),o.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),s.addEventListener(`click`,()=>{x.setState(`isCartModalOpen`,!1),b()}),window.addEventListener(`keydown`,e=>{e.key===`Escape`&&(x.setState(`isCartModalOpen`,!1),b())}),r.forEach(e=>{e.addEventListener(`click`,()=>{C.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=z.products.find(t=>t.productId===e.target.dataset.productId);k(t,1),A({message:`장바구니에 추가되었습니다`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),limit:e.target.value});C.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),sort:e.target.value});C.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=D({...O(t.search),search:e.target.value});C.push(`${t.pathname}?${n}`)});let m=document.getElementById(`product-list-end-indicator`),h=!1,g=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!h){h=!0,z.pagination.page++,g.unobserve(m);let e=z.pagination.limit,t=z.filters.sort,n=z.pagination.page,r=z.filters.search;w({limit:e,sort:t,page:n,search:r}).then(e=>{z.productLoading=!1,z.products=[...z.products,...e.products],z.pagination=e.pagination,z.filters=e.filters,z.isEnd=e.pagination.total<=z.products.length}).then(()=>{h=!1,b()})}})},{threshold:.7});g.observe(m)};const V=`
     <div class="py-20 bg-gray-50 flex items-center justify-center">
         <div class="text-center">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <p class="text-gray-600">상품 정보를 불러오는 중...</p>
         </div>
     </div>  
-`,F=`
+`,H=`
     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,I=`
+`,U=`
     <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,L=({rating:e})=>`
+`,W=({rating:e})=>`
     <div class="flex items-center">
-        ${F.repeat(e)}
-        ${I.repeat(5-e)}
+        ${H.repeat(e)}
+        ${U.repeat(5-e)}
     </div>
     <span class="ml-2 text-sm text-gray-600">${Number(e).toFixed(1)}</span>
-`,R=({min:e,max:t})=>`
+`,G=({min:e,max:t})=>`
     <div class="flex items-center">
         <button id="quantity-decrease" class="w-8 h-8 flex items-center justify-center border border-gray-300 
             rounded-l-md bg-gray-50 hover:bg-gray-100">
@@ -286,7 +426,7 @@ ${j({message:`장바구니에 추가되었습니다`})}
             </svg>
         </button>
     </div>
-`,z=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
+`,K=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
     <div class="bg-white rounded-lg shadow-sm mb-6">
       <!-- 상품 이미지 -->
       <div class="p-4">
@@ -299,7 +439,7 @@ ${j({message:`장바구니에 추가되었습니다`})}
           <h1 class="text-xl font-bold text-gray-900 mb-3">${t}</h1>
           <!-- 평점 및 리뷰 -->
           <div class="flex items-center mb-3">
-            ${L({rating:n})}
+            ${W({rating:n})}
             <span class="ml-2 text-sm text-gray-600">(${r}개 리뷰)</span>
           </div>
           <!-- 가격 -->
@@ -320,7 +460,7 @@ ${j({message:`장바구니에 추가되었습니다`})}
       <div class="border-t border-gray-200 p-4">
         <div class="flex items-center justify-between mb-4">
           <span class="text-sm font-medium text-gray-900">수량</span>
-          ${R({min:1,max:a})}
+          ${G({min:1,max:a})}
         </div>
         <!-- 액션 버튼 -->
         <button id="add-to-cart-btn" data-product-id="85067212996" class="w-full bg-blue-600 text-white py-3 px-4 rounded-md 
@@ -329,7 +469,7 @@ ${j({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
     </div>
-`,B=({category1:e,category2:t})=>`
+`,q=({category1:e,category2:t})=>`
     <nav class="mb-4">
       <div class="flex items-center space-x-2 text-sm text-gray-600">
         <a href="/" data-link="" class="hover:text-blue-600 transition-colors">홈</a>
@@ -347,7 +487,7 @@ ${j({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
     </nav>
-`,V=({products:e})=>`
+`,J=({products:e})=>`
     <div class="bg-white rounded-lg shadow-sm">
       <div class="p-4 border-b border-gray-200">
         <h2 class="text-lg font-bold text-gray-900">관련 상품</h2>
@@ -367,15 +507,15 @@ ${j({message:`장바구니에 추가되었습니다`})}
         </div>
       </div>
     </div>
-`,H={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},U=()=>{let[e,t]=x.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(H.isDetailLoading=!0,T(r).then(async e=>{H.product=e,H.isDetailLoading=!1,t(!0),b()})),H.isRelatedProductsLoading=!0,H.product&&H.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{w({category1:H.product.category1,category2:H.product.category2}).then(e=>{H.relatedProducts=e.products.filter(e=>e.productId!==H.product.productId),H.isRelatedProductsLoading=!1,b()})}),`
+`,Y={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},X=()=>{let[e,t]=x.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(Y.isDetailLoading=!0,T(r).then(async e=>{Y.product=e,Y.isDetailLoading=!1,t(!0),b()})),Y.isRelatedProductsLoading=!0,Y.product&&Y.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{w({category1:Y.product.category1,category2:Y.product.category2}).then(e=>{Y.relatedProducts=e.products.filter(e=>e.productId!==Y.product.productId),Y.isRelatedProductsLoading=!1,b()})}),`
     <div class="min-h-screen bg-gray-50">
       ${a({title:`상품 상세`,cartItemCount:x.getState(`cartItems`).length})}
     <main class="max-w-md mx-auto px-4 py-4">
-      ${H.isDetailLoading?P:`
+      ${Y.isDetailLoading?V:`
           <!-- 브레드크럼 -->
-          ${B({category1:H.product.category1,category2:H.product.category2})}
+          ${q({category1:Y.product.category1,category2:Y.product.category2})}
             <!-- 상품 상세 정보 -->
-            ${z({image:H.product.image,name:H.product.title,rating:H.product.rating,reviewCount:H.product.reviewCount,price:H.product.lprice,stock:H.product.stock,description:H.product.description})}`}
+            ${K({image:Y.product.image,name:Y.product.title,rating:Y.product.rating,reviewCount:Y.product.reviewCount,price:Y.product.lprice,stock:Y.product.stock,description:Y.product.description})}`}
       <!-- 상품 목록으로 이동 -->
       <div class="mb-6">
         <button class="block w-full text-center bg-gray-100 text-gray-700 py-3 px-4 rounded-md 
@@ -384,9 +524,9 @@ ${j({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
       <!-- 관련 상품 -->
-      ${H.isRelatedProductsLoading&&(H.relatedProducts??[]).length<=0?``:V({products:H.relatedProducts})}
+      ${Y.isRelatedProductsLoading&&(Y.relatedProducts??[]).length<=0?``:J({products:Y.relatedProducts})}
     </main>
     ${g}
   </div>
   ${j({message:`장바구니에 추가되었습니다`})}
-  `};U.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<H.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);k(H.product,e),A({message:`장바구니에 추가되었습니다`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;C.push(`/product/${t}`),H.relatedProducts=[],x.setState(`mounted`,!1)})})};const W=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${i}/mockServiceWorker.js`}}));function G(){x.subscribe({update:()=>{b({state:x.state})}}),C.addRoute(`/`,{regex:RegExp(`^${i}/?$`),page:N}),C.addRoute(`/product/:id`,{regex:RegExp(`^${i}/product/\\d+$`),page:U}),x.notify()}W().then(G);
+  `};X.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<Y.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);k(Y.product,e),A({message:`장바구니에 추가되었습니다`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;C.push(`/product/${t}`),Y.relatedProducts=[],x.setState(`mounted`,!1)})})};const Z=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${i}/mockServiceWorker.js`}}));function Q(){x.subscribe({update:()=>{b({state:x.state})}}),C.addRoute(`/`,{regex:RegExp(`^${i}/?$`),page:B}),C.addRoute(`/product/:id`,{regex:RegExp(`^${i}/product/\\d+$`),page:X}),x.notify()}Z().then(Q);
