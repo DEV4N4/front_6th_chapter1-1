@@ -174,7 +174,7 @@
     <div class="grid grid-cols-2 gap-4 mb-6" id="products-grid">
         ${e}
     </div>
-`,v=()=>`
+`,v=(()=>`/front_6th_chapter1-1`)(),y=()=>`
     <main class="max-w-md mx-auto px-4 py-4">
       <div class="text-center my-4 py-20 shadow-md p-6 bg-white rounded-lg">
       <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
@@ -207,7 +207,7 @@
       <a href="/" data-link class="inline-block px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">홈으로</a>
     </div>
     </main>
-  `;function y(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(S.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=v,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const b={state:{mounted:!1,cartItems:[]},getState:e=>(localStorage.getItem(e)&&(b.state[e]=JSON.parse(localStorage.getItem(e))),b.state[e]),setState:(e,t,{persist:n=!1}={})=>{b.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[b.state[e],t=>{b.state[e]=t}],setStates:e=>{for(let t in e)b.state[t]=e[t]},observers:[],subscribe:e=>{b.observers.push(e)},unsubscribe:e=>{b.observers=b.observers.filter(t=>t!==e)},notify:()=>{b.observers.forEach(e=>e.update())}};function x(){let e={routes:{},handlePopState:()=>{e.handleRoute(window.location.pathname)},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,e),b.setState(`mounted`,!1),y()}};return window.addEventListener(`popstate`,()=>{b.setState(`mounted`,!1),y()}),e}const S=new x;async function C(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function w(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function T(){let e=await fetch(`/api/categories`);return await e.json()}const E=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),D=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),O=(e,t)=>{let n=b.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);b.setState(`cartItems`,i,{persist:!0})}else b.setState(`cartItems`,[...b.getState(`cartItems`),{...e,quantity:t}],{persist:!0});y()},k=({message:e})=>{let t=document.querySelector(`#success-toast`),n=document.querySelector(`#toast-message`);n.textContent=e,t&&(t.classList.remove(`opacity-0`),t.classList.add(`opacity-100`),setTimeout(()=>{t.classList.remove(`opacity-100`),t.classList.add(`opacity-0`)},3e3))},A=({message:e})=>`
+  `;function b(){var e;let t=document.getElementById(`root`),n=window.location.pathname,r=Object.values(C.routes),i;for(let e of r)if(e.regex.test(n)){i=e.page;break}i??=y,t.innerHTML=i(),(e=i.registerEvent)?.call(i)}const x={state:{mounted:!1,cartItems:[]},getState:e=>(localStorage.getItem(e)&&(x.state[e]=JSON.parse(localStorage.getItem(e))),x.state[e]),setState:(e,t,{persist:n=!1}={})=>{x.state[e]=t,n&&localStorage.setItem(e,JSON.stringify(t))},useState:e=>[x.state[e],t=>{x.state[e]=t}],setStates:e=>{for(let t in e)x.state[t]=e[t]},observers:[],subscribe:e=>{x.observers.push(e)},unsubscribe:e=>{x.observers=x.observers.filter(t=>t!==e)},notify:()=>{x.observers.forEach(e=>e.update())}};function S(){let e={routes:{},addRoute:(t,n)=>{e.routes[t]=n},push:e=>{window.history.pushState(null,``,`${v===``?``:v+`/`}${e}`),x.setState(`mounted`,!1),b()}};return window.addEventListener(`popstate`,()=>{x.setState(`mounted`,!1),b()}),e}const C=new S;async function w(e={}){let{limit:t=20,search:n=``,category1:r=``,category2:i=``,sort:a=`price_asc`}=e,o=e.current??e.page??1,s=new URLSearchParams({page:o.toString(),limit:t.toString(),...n&&{search:n},...r&&{category1:r},...i&&{category2:i},sort:a}),c=await fetch(`/api/products?${s}`);return await c.json()}async function T(e){let t=await fetch(`/api/products/${e}`);return await t.json()}async function E(){let e=await fetch(`/api/categories`);return await e.json()}const D=e=>Object.entries(e).map(([e,t])=>`${e}=${t}`).join(`&`),O=e=>e.replace(/^\?/,``).split(`&`).reduce((e,t)=>{let[n,r]=t.split(`=`);return e[n]=r,e},{}),k=(e,t)=>{let n=x.getState(`cartItems`),r=n.find(t=>t.productId===e.productId);if(r){r.quantity+=t;let i=n.map(t=>t.productId===e.productId?r:t);x.setState(`cartItems`,i,{persist:!0})}else x.setState(`cartItems`,[...x.getState(`cartItems`),{...e,quantity:t}],{persist:!0});b()},A=({message:e})=>{let t=document.querySelector(`#success-toast`),n=document.querySelector(`#toast-message`);n.textContent=e,t&&(t.classList.remove(`opacity-0`),t.classList.add(`opacity-100`),setTimeout(()=>{t.classList.remove(`opacity-100`),t.classList.add(`opacity-0`)},3e3))},j=({message:e})=>`
 <div id="success-toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 opacity-0 transition-opacity duration-300">
   <div class="bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 max-w-sm">
     <div class="flex-shrink-0">
@@ -223,53 +223,53 @@
     </button>
   </div>  
 </div>
-`,j={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},M=()=>{let{productCountLimit:e,pagination:t}=j,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,a=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=b.useState(`mounted`);return s===!1&&(j.productLoading=!0,j.categoryLoading=!0,Promise.all([C({limit:n,sort:r,page:o,search:a}).then(e=>{j.productLoading=!1,j.products=e.products,j.pagination=e.pagination,j.filters=e.filters,j.isEnd=e.pagination.total<=j.products.length}),T().then(e=>{j.categoryLoading=!1,j.categories=e})]).then(()=>{c(!0),y()})),`
+`,M={products:[],filters:{},pagination:{},categoryLoading:!1,productLoading:!1,categories:{},productCountLimit:20,isEnd:!1},N=()=>{let{productCountLimit:e,pagination:t}=M,n=Number(new URL(window.location.href).searchParams.get(`limit`)||e),r=new URL(window.location.href).searchParams.get(`sort`)||`price_asc`,a=new URL(window.location.href).searchParams.get(`search`)||``,o=t.page,[s,c]=x.useState(`mounted`);return s===!1&&(M.productLoading=!0,M.categoryLoading=!0,Promise.all([w({limit:n,sort:r,page:o,search:a}).then(e=>{M.productLoading=!1,M.products=e.products,M.pagination=e.pagination,M.filters=e.filters,M.isEnd=e.pagination.total<=M.products.length}),E().then(e=>{M.categoryLoading=!1,M.categories=e})]).then(()=>{c(!0),b()})),`
     <div class="min-h-screen bg-gray-50">
-      ${i({title:`쇼핑몰`,cartItemCount:b.getState(`cartItems`).length})}
+      ${i({title:`쇼핑몰`,cartItemCount:x.getState(`cartItems`).length})}
       <main class="max-w-md mx-auto px-4 py-4">
-      ${d({state:j})}
+      ${d({state:M})}
         <!-- 상품 목록 -->
         <div class="mb-6">
           <div>
           <!-- 상품 개수 정보 -->
-          ${j.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
-              총 <span class="font-medium text-gray-900">${j.pagination.total}개</span>의 상품
+          ${M.productLoading?``:`<div class="mb-4 text-sm text-gray-600">
+              총 <span class="font-medium text-gray-900">${M.pagination.total}개</span>의 상품
             </div>`}
             <!-- 상품 그리드 -->
             ${_({children:`
-              ${(j.products??[]).length>0?`${j.products.map(e=>f(e)).join(``)}`:g.repeat(4)}
+              ${(M.products??[]).length>0?`${M.products.map(e=>f(e)).join(``)}`:g.repeat(4)}
               `})}
             <div id="product-list-end-indicator" style="height: 100px;">
-              ${j.isEnd?m:p}
+              ${M.isEnd?m:p}
             </div>
           </div>
         </div>
       </main>
       ${h}
 </div>
-${A({message:`장바구니에 추가되었습니다`})}
-  `};M.state=j,M.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`#add-to-cart-btn`);r.forEach(e=>{e.addEventListener(`click`,()=>{S.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=j.products.find(t=>t.productId===e.target.dataset.productId);O(t,1),k({message:`장바구니에 추가되었습니다`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=E({...D(t.search),limit:e.target.value});S.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=E({...D(t.search),sort:e.target.value});S.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=E({...D(t.search),search:e.target.value});S.push(`${t.pathname}?${n}`)});let a=document.getElementById(`product-list-end-indicator`),o=!1,s=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!o){o=!0,j.pagination.page++,s.unobserve(a);let e=j.pagination.limit,t=j.filters.sort,n=j.pagination.page,r=j.filters.search;C({limit:e,sort:t,page:n,search:r}).then(e=>{j.productLoading=!1,j.products=[...j.products,...e.products],j.pagination=e.pagination,j.filters=e.filters,j.isEnd=e.pagination.total<=j.products.length}).then(()=>{o=!1,y()})}})},{threshold:.7});s.observe(a)};const N=`
+${j({message:`장바구니에 추가되었습니다`})}
+  `};N.state=M,N.registerEvent=()=>{let e=document.getElementById(`limit-select`),t=document.getElementById(`sort-select`),n=document.getElementById(`search-input`),r=document.querySelectorAll(`.product-card`),i=document.querySelectorAll(`#add-to-cart-btn`);r.forEach(e=>{e.addEventListener(`click`,()=>{C.push(`/product/${e.dataset.productId}`)})}),i.forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation();let t=M.products.find(t=>t.productId===e.target.dataset.productId);k(t,1),A({message:`장바구니에 추가되었습니다`})})}),e.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),limit:e.target.value});C.push(`${t.pathname}?${n}`)}),t.addEventListener(`change`,e=>{let t=new URL(window.location.href),n=D({...O(t.search),sort:e.target.value});C.push(`${t.pathname}?${n}`)}),n.addEventListener(`keydown`,e=>{if(e.key!==`Enter`)return;let t=new URL(window.location.href),n=D({...O(t.search),search:e.target.value});C.push(`${t.pathname}?${n}`)});let a=document.getElementById(`product-list-end-indicator`),o=!1,s=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!o){o=!0,M.pagination.page++,s.unobserve(a);let e=M.pagination.limit,t=M.filters.sort,n=M.pagination.page,r=M.filters.search;w({limit:e,sort:t,page:n,search:r}).then(e=>{M.productLoading=!1,M.products=[...M.products,...e.products],M.pagination=e.pagination,M.filters=e.filters,M.isEnd=e.pagination.total<=M.products.length}).then(()=>{o=!1,b()})}})},{threshold:.7});s.observe(a)};const P=`
     <div class="py-20 bg-gray-50 flex items-center justify-center">
         <div class="text-center">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <p class="text-gray-600">상품 정보를 불러오는 중...</p>
         </div>
     </div>  
-`,P=`
+`,F=`
     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,F=`
+`,I=`
     <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
     </svg>
-`,I=({rating:e})=>`
+`,L=({rating:e})=>`
     <div class="flex items-center">
-        ${P.repeat(e)}
-        ${F.repeat(5-e)}
+        ${F.repeat(e)}
+        ${I.repeat(5-e)}
     </div>
     <span class="ml-2 text-sm text-gray-600">${Number(e).toFixed(1)}</span>
-`,L=({min:e,max:t})=>`
+`,R=({min:e,max:t})=>`
     <div class="flex items-center">
         <button id="quantity-decrease" class="w-8 h-8 flex items-center justify-center border border-gray-300 
             rounded-l-md bg-gray-50 hover:bg-gray-100">
@@ -286,7 +286,7 @@ ${A({message:`장바구니에 추가되었습니다`})}
             </svg>
         </button>
     </div>
-`,R=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
+`,z=({image:e,name:t,rating:n,reviewCount:r,price:i,stock:a,description:o})=>`
     <div class="bg-white rounded-lg shadow-sm mb-6">
       <!-- 상품 이미지 -->
       <div class="p-4">
@@ -299,7 +299,7 @@ ${A({message:`장바구니에 추가되었습니다`})}
           <h1 class="text-xl font-bold text-gray-900 mb-3">${t}</h1>
           <!-- 평점 및 리뷰 -->
           <div class="flex items-center mb-3">
-            ${I({rating:n})}
+            ${L({rating:n})}
             <span class="ml-2 text-sm text-gray-600">(${r}개 리뷰)</span>
           </div>
           <!-- 가격 -->
@@ -320,7 +320,7 @@ ${A({message:`장바구니에 추가되었습니다`})}
       <div class="border-t border-gray-200 p-4">
         <div class="flex items-center justify-between mb-4">
           <span class="text-sm font-medium text-gray-900">수량</span>
-          ${L({min:1,max:a})}
+          ${R({min:1,max:a})}
         </div>
         <!-- 액션 버튼 -->
         <button id="add-to-cart-btn" data-product-id="85067212996" class="w-full bg-blue-600 text-white py-3 px-4 rounded-md 
@@ -329,7 +329,7 @@ ${A({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
     </div>
-`,z=({category1:e,category2:t})=>`
+`,B=({category1:e,category2:t})=>`
     <nav class="mb-4">
       <div class="flex items-center space-x-2 text-sm text-gray-600">
         <a href="/" data-link="" class="hover:text-blue-600 transition-colors">홈</a>
@@ -347,7 +347,7 @@ ${A({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
     </nav>
-`,B=({products:e})=>`
+`,V=({products:e})=>`
     <div class="bg-white rounded-lg shadow-sm">
       <div class="p-4 border-b border-gray-200">
         <h2 class="text-lg font-bold text-gray-900">관련 상품</h2>
@@ -367,15 +367,15 @@ ${A({message:`장바구니에 추가되었습니다`})}
         </div>
       </div>
     </div>
-`,V={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},H=()=>{let[e,t]=b.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(V.isDetailLoading=!0,w(r).then(async e=>{V.product=e,V.isDetailLoading=!1,t(!0),y()})),V.isRelatedProductsLoading=!0,V.product&&V.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{C({category1:V.product.category1,category2:V.product.category2}).then(e=>{V.relatedProducts=e.products.filter(e=>e.productId!==V.product.productId),V.isRelatedProductsLoading=!1,y()})}),`
+`,H={product:null,isDetailLoading:!1,isRelatedProductsLoading:!1,isCartAdded:!1,relatedProducts:[],cartItems:[]},U=()=>{let[e,t]=x.useState(`mounted`),n=new URL(window.location.href).pathname.split(`/`),r=n[n.length-1];return e===!1&&(H.isDetailLoading=!0,T(r).then(async e=>{H.product=e,H.isDetailLoading=!1,t(!0),b()})),H.isRelatedProductsLoading=!0,H.product&&H.relatedProducts.length<=0&&new Promise(e=>setTimeout(e,2e3)).then(()=>{w({category1:H.product.category1,category2:H.product.category2}).then(e=>{H.relatedProducts=e.products.filter(e=>e.productId!==H.product.productId),H.isRelatedProductsLoading=!1,b()})}),`
     <div class="min-h-screen bg-gray-50">
-      ${i({title:`상품 상세`,cartItemCount:b.getState(`cartItems`).length})}
+      ${i({title:`상품 상세`,cartItemCount:x.getState(`cartItems`).length})}
     <main class="max-w-md mx-auto px-4 py-4">
-      ${V.isDetailLoading?N:`
+      ${H.isDetailLoading?P:`
           <!-- 브레드크럼 -->
-          ${z({category1:V.product.category1,category2:V.product.category2})}
+          ${B({category1:H.product.category1,category2:H.product.category2})}
             <!-- 상품 상세 정보 -->
-            ${R({image:V.product.image,name:V.product.title,rating:V.product.rating,reviewCount:V.product.reviewCount,price:V.product.lprice,stock:V.product.stock,description:V.product.description})}`}
+            ${z({image:H.product.image,name:H.product.title,rating:H.product.rating,reviewCount:H.product.reviewCount,price:H.product.lprice,stock:H.product.stock,description:H.product.description})}`}
       <!-- 상품 목록으로 이동 -->
       <div class="mb-6">
         <button class="block w-full text-center bg-gray-100 text-gray-700 py-3 px-4 rounded-md 
@@ -384,9 +384,9 @@ ${A({message:`장바구니에 추가되었습니다`})}
         </button>
       </div>
       <!-- 관련 상품 -->
-      ${V.isRelatedProductsLoading&&(V.relatedProducts??[]).length<=0?``:B({products:V.relatedProducts})}
+      ${H.isRelatedProductsLoading&&(H.relatedProducts??[]).length<=0?``:V({products:H.relatedProducts})}
     </main>
     ${h}
   </div>
-  ${A({message:`장바구니에 추가되었습니다`})}
-  `};H.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<V.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);O(V.product,e),k({message:`장바구니에 추가되었습니다`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;S.push(`/product/${t}`),V.relatedProducts=[],b.setState(`mounted`,!1)})})};const U=(()=>`/front_6th_chapter1-1`)(),W=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${U}/mockServiceWorker.js`}}));function G(){b.subscribe({update:()=>{y({state:b.state})}}),S.addRoute(`/`,{regex:RegExp(`^${U}/?$`),page:M}),S.addRoute(`/product/:id`,{regex:RegExp(`^${U}/product/\\d+$`),page:H}),b.notify()}W().then(G);
+  ${j({message:`장바구니에 추가되었습니다`})}
+  `};U.registerEvent=()=>{let e=document.querySelector(`#quantity-decrease`),t=document.querySelector(`#quantity-increase`),n=document.querySelector(`#quantity-input`),r=document.querySelector(`#add-to-cart-btn`),i=document.querySelectorAll(`#related-product`);e&&e.addEventListener(`click`,()=>{let e=parseInt(n.value);e>1&&(n.value=e-1)}),t&&t.addEventListener(`click`,()=>{let e=parseInt(n.value);e<H.product.stock&&(n.value=e+1)}),r&&r.addEventListener(`click`,async()=>{let e=parseInt(n.value);k(H.product,e),A({message:`장바구니에 추가되었습니다`})}),i&&i.forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.productId;C.push(`/product/${t}`),H.relatedProducts=[],x.setState(`mounted`,!1)})})};const W=()=>r(async()=>{let{worker:e}=await import(`./browser-CcyfQrG1.js`);return{worker:e}},[]).then(({worker:e})=>e.start({onUnhandledRequest:`bypass`,serviceWorker:{url:`${v}/mockServiceWorker.js`}}));function G(){x.subscribe({update:()=>{b({state:x.state})}}),C.addRoute(`/`,{regex:RegExp(`^${v}/?$`),page:N}),C.addRoute(`/product/:id`,{regex:RegExp(`^${v}/product/\\d+$`),page:U}),x.notify()}W().then(G);
